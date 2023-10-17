@@ -10,8 +10,10 @@
  * @flags: Flags to determine the conversion behavior.
  * @params: A pointer to the structure containing printing parameters.
  *
- * Return: A pointer to a static buffer containing the converted string representation.
+ * Return: A pointer to a static buffer containing
+ * the converted string representation.
  */
+
 
 char *convert(long int num, int base, int flags, params_t *params)
 {
@@ -27,29 +29,25 @@ char *convert(long int num, int base, int flags, params_t *params)
 		n = -num;
 		sign = '-';
 	}
-
-	conversion_array = flags & CONVERT_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
+	conversion_array = flags &
+			CONVERT_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
 	result_ptr = &result_buffer[49];
 	*result_ptr = '\0';
 
-	do
-	{
+	do {
 		*--result_ptr = conversion_array[n % base];
 		n /= base;
 	} while (n != 0);
-
 	if (sign)
 		*--result_ptr = sign;
-
-	return result_ptr;
-
+	return (result_ptr);
 }
 
 
 /**
  * print_unsigned - A function to format and print an unsigned integer.
- * This function takes an unsigned integer, formats it as a string, and prints it
- * according to the provided parameters.
+ * This function takes an unsigned integer, formats it as a string,
+ *  and prints it according to the provided parameters.
  * @li: The va_list containing the argument to be printed.
  * @params: A pointer to the structure containing printing parameters.
  *
@@ -82,12 +80,11 @@ int print_unsigned(va_list li, params_t *params)
 
 int print_address(va_list li, params_t *params)
 {
-unsigned long int n = va_arg(li, unsigned long int);
-char *str;
+	unsigned long int n = va_arg(li, unsigned long int);
+	char *str;
 
 	if (!n)
 		return (_puts("(nil)"));
-
 	str = convert(n, 16, CONVERT_UNSIGNED | CONVERT_LOWERCASE, params);
 	*--str = 'x';
 	*--str = '0';
